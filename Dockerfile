@@ -15,11 +15,8 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Node.js for npm/npx
-RUN mkdir -p /etc/apt/keyrings && \
-    curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg && \
-    echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.org/node_20.x nodistro main" > /etc/apt/sources.list.d/nodesource.list && \
-    apt-get update && \
-    apt-get install -y nodejs && \
+RUN apt-get update && \
+    apt-get install -y nodejs npm && \
     rm -rf /var/lib/apt/lists/*
 
 # Bun
