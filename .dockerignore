@@ -1,0 +1,13 @@
+.git
+.gitignore
+.env
+.env.example
+docker-compose.yml
+docker-compose.*.yml
+Dockerfile
+README.md
+setup.md
+persistent_root/
+scripts/
+restart-opencode/
+*.md
