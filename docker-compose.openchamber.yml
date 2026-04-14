@@ -8,17 +8,9 @@ services:
       - .env
 
     entrypoint: ["/usr/bin/tini", "--", "opencode"]
-    command: web --hostname 0.0.0.0 --port 4096
-    
-    # If the container fails to start, use this
-    # then `docker compose exec opencode bash`
-    # entrypoint: ["tail"]
-    # command: -f /dev/null
-    
-    ports:
-      - "${OPENCODE_IP:-127.0.0.1}:${OPENCODE_PORT:-4096}:4096"
+    command: serve --port 4096 --hostname 0.0.0.0
+
     volumes:
-      # Skills
       - ./restart-opencode:/root/.config/opencode/skills/restart-opencode:ro
 
       # Persistent system directories – only real ones (symlinks stay in container)
@@ -32,4 +24,27 @@ services:
       - ./persistent_root/srv:/srv
       - ./persistent_root/usr:/usr
       - ./persistent_root/var:/var
+    networks:
+      - openchamber_net
     restart: unless-stopped
+
+  openchamber:
+    build:
+      context: .
+      dockerfile: Dockerfile.openchamber
+      tags:
+        - openchamber-docker-ubuntu
+    environment:
+      - UI_PASSWORD=${OPENCHAMBER_UI_PASSWORD}
+      - OPENCODE_HOST=http://opencode:4096
+      - OPENCODE_SKIP_START=true
+    ports:
+      - "${OPENCODE_IP:-127.0.0.1}:${OPENCODE_PORT:-4096}:4096"
+    depends_on:
+      - opencode
+    networks:
+      - openchamber_net
+    restart: unless-stopped
+
+networks:
+  openchamber_net:

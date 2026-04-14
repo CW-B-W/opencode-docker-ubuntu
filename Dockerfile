@@ -1,5 +1,8 @@
 FROM ubuntu:24.04
 
+# Set non-interactive mode for apt
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         ca-certificates \
@@ -14,10 +17,14 @@ RUN apt-get update && \
         gnupg \
     && rm -rf /var/lib/apt/lists/*
 
-# Node.js for npm/npx
-RUN apt-get update && \
-    apt-get install -y nodejs npm && \
-    rm -rf /var/lib/apt/lists/*
+# Install dependencies and Node.js 22 from NodeSource
+RUN apt-get update && apt-get install -y curl gnupg \
+    && curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Verify installation
+RUN node -v && npm -v
 
 # Bun
 RUN curl -fsSL https://bun.sh/install | bash

@@ -7,7 +7,7 @@ Self-hosted [OpenCode](https://opencode.ai) running on Ubuntu 24.04 with Docker 
 - Ubuntu 24.04 base with official OpenCode installer
 - Persistent storage for system directories and configs
 - MCP server support (Brave Search, Tavily, etc.)
-- Easy setup with Makefile
+- Optional OpenChamber web UI for browser/mobile access
 - Restart skill for container management
 
 ## Quick Start
@@ -45,6 +45,22 @@ OPENCODE_PORT=4096         # Port to expose
 BRAVE_API_KEY=             # Brave Search API key
 TAVILY_API_KEY=            # Tavily API key
 ```
+
+## OpenChamber (Web UI)
+
+Optionally use [OpenChamber](https://github.com/btriapitsyn/openchamber) for a browser/mobile interface:
+
+```bash
+docker compose -f docker-compose.openchamber.yml up -d
+```
+
+Access at `http://localhost:4096`. Set your UI password in `.env`:
+
+```bash
+OPENCHAMBER_UI_PASSWORD=your-secure-password
+```
+
+OpenChamber connects to the internal OpenCode server - only OpenChamber is exposed.
 
 ### MCP Servers
 

@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
 
-IMAGE_NAME="${1:-opencode-ubuntu}"
+IMAGE_NAME="${1:-opencode-docker-ubuntu}"
 PERSISTENT_ROOT="$(dirname "$0")/../persistent_root"
 
 DIRS="etc home media mnt opt root run srv usr var"

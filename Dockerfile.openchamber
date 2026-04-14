@@ -1,0 +1,8 @@
+FROM opencode-docker-ubuntu:latest
+
+RUN curl -fsSL https://raw.githubusercontent.com/btriapitsyn/openchamber/main/scripts/install.sh | bash
+
+WORKDIR /root
+
+ENTRYPOINT ["/usr/bin/tini", "--", "openchamber"]
+CMD ["serve", "--port", "4096", "--host", "0.0.0.0", "--foreground"]
