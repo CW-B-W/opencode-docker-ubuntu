@@ -4,5 +4,5 @@ RUN curl -fsSL https://raw.githubusercontent.com/btriapitsyn/openchamber/main/sc
 
 WORKDIR /root
 
-ENTRYPOINT ["/usr/bin/tini", "--", "openchamber"]
-CMD ["serve", "--port", "4096", "--host", "0.0.0.0", "--foreground"]
+# Use a shell-based ENTRYPOINT to allow variable expansion
+ENTRYPOINT ["/usr/bin/tini", "--", "sh", "-c", "openchamber serve --port 4096 --host 0.0.0.0 --foreground --ui-password ${UI_PASSWORD}"]
