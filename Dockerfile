@@ -15,10 +15,8 @@ RUN apt-get update && \
     && rm -rf /var/lib/apt/lists/*
 
 # Node.js for npm/npx
-RUN apt-get update && apt-get install -y ca-certificates curl gnupg && \
-    mkdir -p /etc/apt/keyrings && \
-    curl -fsSL https://deb.nodesource.com/setup_current.x | bash - && \
-    apt-get install -y nodejs && \
+RUN apt-get update && \
+    apt-get install -y nodejs npm && \
     rm -rf /var/lib/apt/lists/*
 
 # Bun
